@@ -8,6 +8,7 @@
   },
   "scripts": {
     "build": "tsc",
+    "setup:instance": "node --env-file-if-exists=.env scripts/setup-instance.mjs",
     "test": "npm run build && node --test dist/test/*.test.js test/*.test.mjs",
     "cdk": "node --env-file-if-exists=.env scripts/cdk.mjs",
     "synth": "npm run build && npm run cdk -- synth",

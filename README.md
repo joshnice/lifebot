@@ -23,12 +23,15 @@ The project includes:
 - Shared editor settings and contributor instructions.
 - A TypeScript CDK v2 app in `bin/` and a Lightsail stack in `lib/`.
 - Infrastructure tests in `test/` and pinned dependencies in `package-lock.json`.
+- A Node.js setup script at `scripts/setup-instance.mjs`, run from your laptop over SSH, with an interactive `--configure` mode for Hermes and its gateway.
 
 ## Infrastructure
 
 The stack creates one Lightsail instance. Defaults are `lifebot`, Ubuntu 24.04 (`ubuntu_24_04`), and bundle `small_3_1`. SSH is the only inbound port and requires an explicit IPv4 CIDR. You can supply an existing Lightsail key pair or use the regional default.
 
 The deployment region is Mumbai (`ap-south-1`), the closest supported Lightsail region to Dubai. The account comes from your AWS credentials.
+
+The model provider will use your ChatGPT subscription through Hermes's OpenAI Codex OAuth flow. Run `npm run setup:instance -- --configure` from your laptop and select **ChatGPT or Codex Subscription** in the model wizard. No OpenAI API key is needed for that provider.
 
 See [CDK deployment](docs/cdk-deployment.md) for region selection, bundle verification, and deployment commands. Hermes installation remains a separate step after provisioning.
 

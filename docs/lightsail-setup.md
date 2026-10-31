@@ -1,6 +1,45 @@
 # Lightsail setup
 
-This is the manual Hermes installation guide for a native Linux deployment. To create an instance using this repository, first follow [CDK deployment](cdk-deployment.md), then continue from step 2 below. These steps have not been executed on a Lightsail instance yet. The Ubuntu commands below assume an Ubuntu blueprint; adapt them if an existing instance uses another distribution.
+This guide covers a native Hermes installation on Ubuntu 24.04. To create an instance using this repository, first follow [CDK deployment](cdk-deployment.md). See [deployment notes](deployment-notes.md) for the existing instance.
+
+## Scripted setup
+
+The Node.js script `scripts/setup-instance.mjs` runs on your laptop and connects to the instance over SSH. No Node.js installation is needed on the server to run this setup.
+
+Set the following in your local `.env`, using the deployment output and your actual key path:
+
+```dotenv
+LIGHTSAIL_HOST=15.206.168.38
+LIGHTSAIL_SSH_USER=ubuntu
+LIGHTSAIL_SSH_KEY=~/Downloads/LightsailDefaultKey-ap-south-1.pem
+```
+
+From the repository directory on your laptop:
+
+```bash
+npm run setup:instance
+npm run setup:instance -- --configure
+```
+
+The first command installs prerequisites and the stable Hermes release using its official installer, verifies the CLI, and enables user services after logout. If no swap is active, it creates and enables a 2 GB `/swapfile` and adds it to `/etc/fstab`, so builds fit on the 2 GB instance and swap survives reboot. An existing `/swapfile` is enabled without being overwritten; if it is not valid swap, setup stops. Existing Hermes installations are preserved. Browser tools remain enabled; the desktop computer-use driver is skipped on this headless server. The server's SSH user needs passwordless sudo, as provided by the Ubuntu Lightsail blueprint.
+
+The second command also opens the model and messaging wizards in your terminal, installs the gateway user service, starts it, and shows its status. Answer the provider, model, messaging, and allowed-user prompts there. These interactive steps cannot be completed unattended without choosing a provider and channel.
+
+### Connect your ChatGPT subscription
+
+Lifebot will use Hermes's **OpenAI Codex** provider through your ChatGPT subscription. During `--configure`, the script runs `hermes model`. Choose **ChatGPT or Codex Subscription**, open the URL shown in your laptop browser, enter the device code, and sign in to the account holding your subscription. Then choose an available model. No OpenAI API key or separate Codex CLI installation is required for this Hermes provider.
+
+Hermes stores the login in its own `~/.hermes/auth.json` on the instance and manages token refresh. Do not put OAuth tokens in this repository or the laptop's deployment `.env`. A successful login and a real conversation are needed to verify model access; Hermes's provider docs do not specify the eligible plan tiers or detailed quota accounting.
+
+If device-code login is disabled for your account or workspace, Hermes documents a browser flow via `hermes auth add openai-codex --browser`. That alternative requires an SSH tunnel for port 1455 when signing in from a remote server; use the default device-code flow first.
+
+Only commands and the public upstream installer are sent over SSH. Your local `.env`, AWS access keys, and SSH private key stay on your laptop. Hermes stores its own credentials and state under the server user's `~/.hermes` directory. No firewall changes, backups, or reboots are performed by the script. Fresh installs follow the current stable release rather than a pinned build.
+
+Use Hermes's update command separately when you intend to upgrade. After setup, open a new SSH session or run `export PATH="$HOME/.local/bin:$PATH"` on the instance to use `hermes` in your current shell. Test a real conversation and service operation after logout.
+
+## Manual alternative
+
+The commands below describe the same installation and configuration steps if you prefer to run them manually.
 
 ## 1. Record the deployment details
 
@@ -38,11 +77,11 @@ The official installer selects a stable Hermes release and manages its runtime d
 ## 4. Configure and verify the agent
 
 ```bash
-hermes setup
+hermes model
 hermes
 ```
 
-Select the model provider and model in setup, then verify a basic conversation. Supply credentials through Hermes setup on the instance. On a default Linux install, Hermes stores user data in `~/.hermes`; this directory must stay out of Git.
+Select **ChatGPT or Codex Subscription**, complete the device-code login in your laptop browser, and choose an available model. Then verify a basic conversation. On a default Linux install, Hermes stores user data in `~/.hermes`; this directory must stay out of Git.
 
 ## 5. Enable messaging and continuous operation
 
@@ -67,3 +106,4 @@ Document the instance identity, OS, installed Hermes release, model provider, se
 - [AWS: connect to Lightsail using SSH](https://docs.aws.amazon.com/lightsail/latest/userguide/amazon-lightsail-ssh-using-terminal.html).
 - [Hermes: installation](https://hermes-agent.nousresearch.com/docs/getting-started/installation).
 - [Hermes: messaging gateway and service commands](https://hermes-agent.nousresearch.com/docs/user-guide/messaging).
+- [Hermes: OpenAI Codex subscription authentication](https://hermes-agent.nousresearch.com/docs/integrations/providers).

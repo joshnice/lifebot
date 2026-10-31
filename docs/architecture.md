@@ -14,7 +14,7 @@ User -> messaging platform -> Hermes gateway -> Hermes agent -> model provider
                                       persistent state on Lightsail
 ```
 
-The messaging platform and model provider are still to be chosen. The initial deployment approach is a native Linux installation with Hermes managing its gateway service through systemd.
+The model provider is OpenAI Codex using the user's ChatGPT subscription through Hermes's device-code OAuth flow. The specific model and messaging platform are still to be chosen. The deployment uses a native Linux installation with Hermes managing its gateway service through systemd.
 
 The TypeScript CDK app provisions the instance through CloudFormation. Blueprint, bundle, instance name, SSH source CIDR, and key-pair selection are stack parameters. See [CDK deployment](cdk-deployment.md). Hermes installation and configuration follow provisioning.
 
@@ -31,8 +31,7 @@ Hermes uses `~/.hermes` for user data on a default Linux installation. `HERMES_H
 
 ## Decisions still needed
 
-- Final instance size (CDK defaults to Ubuntu 24.04 and `small_3_1` in Mumbai, `ap-south-1`).
-- Model provider and model.
+- Model available to the connected ChatGPT subscription.
 - Primary messaging platform and permitted users.
 - Initial assistant responsibilities and integrations.
 - Backup destination, retention, and restore procedure.

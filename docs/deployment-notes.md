@@ -19,4 +19,10 @@ Verified through the Lightsail API on 2026-10-31 after successful CloudFormation
 
 The first attempt used `small_3_0`, which is unavailable in Mumbai. Its stack rolled back with no surviving resources. The failed application stack was removed and recreated with `small_3_1`. The `CDKToolkit` bootstrap stack was preserved.
 
-Hermes has not been installed yet. Download the regional default private key from the Lightsail console if you do not already have it, then connect and follow [Lightsail setup](lightsail-setup.md).
+Hermes Agent v0.22.5 (stable, commit `bf0203a794`) is installed under `/home/ubuntu/.hermes/hermes-agent`, with the CLI at `/home/ubuntu/.local/bin/hermes`. The CLI and web UI build completed successfully. A 2 GB `/swapfile` was added after the first web UI build exceeded physical RAM; it is enabled and persists through `/etc/fstab`. User lingering is enabled for `ubuntu`.
+
+The setup entry point is now Node.js: `npm run setup:instance` on the laptop, using the SSH settings in local `.env`. Its runtime installation and verification path completed successfully against this instance. The earlier uploaded Bash wrapper has been removed.
+
+Subsequent setup verification on 2026-10-31 confirmed `model.provider=openai-codex` and `model.default=gpt-6.1-terra`. The gateway user service is enabled and running, with lingering enabled. Startup reports **No messaging platforms enabled**, so a messaging channel still needs configuration. No inference request was made during this status check; model configuration alone does not verify a successful conversation.
+
+On the instance, use `hermes` for terminal chat, or `hermes gateway setup` to connect a messaging platform. See [Lightsail setup](lightsail-setup.md).
