@@ -26,3 +26,5 @@ The setup entry point is now Node.js: `npm run setup:instance` on the laptop, us
 Subsequent setup verification on 2026-10-31 confirmed `model.provider=openai-codex` and `model.default=gpt-6.1-terra`. The gateway user service is enabled and running, with lingering enabled. Startup reports **No messaging platforms enabled**, so a messaging channel still needs configuration. No inference request was made during this status check; model configuration alone does not verify a successful conversation.
 
 On the instance, use `hermes` for terminal chat, or `hermes gateway setup` to connect a messaging platform. See [Lightsail setup](lightsail-setup.md).
+
+Discord was subsequently connected, and the user confirmed a successful model reply in Discord. Native `/sethome` exposed the v0.22.5 startup-order bug described in [compatibility patches](../patches/README.md). The dependency-resolution patch was applied after reproducing the failure, and seven authorization checks passed. The gateway restarted successfully with the patched source; a live `/sethome` retry is needed to confirm the Discord interaction end to end. No home channel was saved by the failed command.

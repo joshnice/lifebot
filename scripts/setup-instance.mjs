@@ -1,5 +1,5 @@
 import { execFileSync, spawnSync } from 'node:child_process';
-import { accessSync, constants } from 'node:fs';
+import { accessSync, constants, readFileSync } from 'node:fs';
 import { homedir } from 'node:os';
 import { join } from 'node:path';
 
@@ -99,6 +99,26 @@ try {
   }
 
   runRemote('Verifying Hermes...', '"$HOME/.local/bin/hermes" --help > /dev/null');
+
+  // v0.22.5 imports Discord's authorization helper before its optional dependency
+  // is available. Resolve that dependency at call time so slash commands work.
+  const version = execFileSync('ssh', [
+    ...sshOptions, target, '"$HOME/.local/bin/hermes" --version',
+  ], { encoding: 'utf8' });
+  if (version.includes('Hermes Agent v0.22.5 ')) {
+    const patch = readFileSync(new URL('../patches/hermes-discord-slash-auth.patch', import.meta.url));
+    const apply = 'git -C "$HOME/.hermes/hermes-agent" apply';
+    const alreadyApplied = spawnSync('ssh', [
+      ...sshOptions, target, `${apply} --reverse --check -`,
+    ], { input: patch, stdio: ['pipe', 'ignore', 'ignore'] });
+    if (alreadyApplied.status !== 0) {
+      runRemote('Checking Discord slash-command compatibility patch...', `${apply} --check -`, { input: patch });
+      runRemote('Applying Discord slash-command compatibility patch...', `${apply} -`, { input: patch });
+      runRemote('Reloading the gateway if it is running...',
+        'if systemctl --user is-active --quiet hermes-gateway.service; then ' +
+        '"$HOME/.local/bin/hermes" gateway restart; fi');
+    }
+  }
   runRemote('Enabling user services after logout...', `sudo -n loginctl enable-linger ${user}`);
 
   if (configure) {
