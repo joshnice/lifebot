@@ -28,6 +28,9 @@ dist/
 build/
 
 # Local tools and OS artifacts
+node_modules/
+cdk.out/
+*.tsbuildinfo
 .idea/
 .vscode/
 .DS_Store

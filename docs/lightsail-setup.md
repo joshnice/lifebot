@@ -1,6 +1,6 @@
 # Lightsail setup
 
-This is the manual deployment guide for a native Linux installation. These steps have not been executed on a Lightsail instance yet. The Ubuntu commands below assume an Ubuntu blueprint; adapt them if an existing instance uses another distribution.
+This is the manual Hermes installation guide for a native Linux deployment. To create an instance using this repository, first follow [CDK deployment](cdk-deployment.md), then continue from step 2 below. These steps have not been executed on a Lightsail instance yet. The Ubuntu commands below assume an Ubuntu blueprint; adapt them if an existing instance uses another distribution.
 
 ## 1. Record the deployment details
 
@@ -17,7 +17,7 @@ chmod 400 /path/to/lightsail-key.pem
 ssh -i /path/to/lightsail-key.pem ubuntu@INSTANCE_PUBLIC_IP
 ```
 
-AWS also provides browser-based SSH through the Lightsail console.
+AWS also provides browser-based SSH through the Lightsail console, but the CDK stack's firewall does not enable its source-address alias by default.
 
 ## 3. Install Hermes
 

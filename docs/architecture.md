@@ -16,6 +16,8 @@ User -> messaging platform -> Hermes gateway -> Hermes agent -> model provider
 
 The messaging platform and model provider are still to be chosen. The initial deployment approach is a native Linux installation with Hermes managing its gateway service through systemd.
 
+The TypeScript CDK app provisions the instance through CloudFormation. Blueprint, bundle, instance name, SSH source CIDR, and key-pair selection are stack parameters. See [CDK deployment](cdk-deployment.md). Hermes installation and configuration follow provisioning.
+
 ## Ownership
 
 | Component | Owner / location |
@@ -29,7 +31,7 @@ Hermes uses `~/.hermes` for user data on a default Linux installation. `HERMES_H
 
 ## Decisions still needed
 
-- Existing or new instance, AWS region, Linux distribution, and instance size.
+- Final instance size (CDK defaults to Ubuntu 24.04 and `small_3_1` in Mumbai, `ap-south-1`).
 - Model provider and model.
 - Primary messaging platform and permitted users.
 - Initial assistant responsibilities and integrations.

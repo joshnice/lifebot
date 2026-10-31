@@ -12,4 +12,4 @@ Lifebot is a personal assistant built on Nous Research's Hermes Agent and hosted
 
 ## Validation
 
-Run `make check` after changes. This currently checks whitespace only; it does not validate a Hermes installation or deployment. As executable functionality is added, include checks appropriate to that functionality.
+Use Node.js 24 and `npm ci`. Run `make check` for whitespace, `npm test` for TypeScript compilation and infrastructure assertions, and `npm run synth` to validate CDK synthesis after infrastructure changes. These checks do not validate regional availability or a running deployment. Never put credentials in CDK parameters, context, or user data.
