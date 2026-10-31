@@ -1,0 +1,39 @@
+# Credentials and local configuration
+.env
+.env.*
+!.env.example
+*.pem
+*.key
+credentials.json
+secrets/
+.aws/
+
+# Hermes runtime data: credentials, conversations, memory, and sessions
+.hermes/
+
+# Local data and backups
+data/
+backups/
+logs/
+*.log
+
+# Python tooling used by future customizations
+.venv/
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.ruff_cache/
+*.egg-info/
+dist/
+build/
+
+# Local tools and OS artifacts
+.idea/
+.vscode/
+.DS_Store
+*~
+*.swp
+.terraform/
+*.tfstate
+*.tfstate.*
+*.tfplan
