@@ -2,7 +2,7 @@
 
 A personal assistant powered by [Nous Research's Hermes Agent](https://github.com/NousResearch/hermes-agent), intended to run continuously on an AWS Lightsail instance.
 
-Life Bot covers daily life, with fitness as its first integration module. The [product plan](docs/product-plan.md) records the agreed scope, permission model, and milestones: WHOOP first, Gmail and Google Calendar as early integrations, then food and recipe scouting, with WhatsApp and broader integrations to follow.
+Life Bot covers daily life, with fitness as a planned domain module. The [product plan](docs/product-plan.md) records the agreed scope, permission model, and milestones: Gmail and Google Calendar next, WHOOP as the first custom domain integration, then food and recipe scouting, with WhatsApp and broader integrations to follow.
 
 This repository holds Lifebot's AWS CDK infrastructure, project documentation, and future customizations. Hermes provides the agent runtime, sessions, memory, tools, and messaging gateway.
 
@@ -43,8 +43,8 @@ Copy `.env.example` to `.env` and fill in `AWS_ACCESS_KEY_ID`, `AWS_SECRET_ACCES
 
 1. Verify persistent memory across a fresh Discord session.
 2. Implement read-default/write-on-explicit-request rules in the runtime and integration boundaries.
-3. Add a read-only WHOOP integration and custom Hermes skill.
-4. Connect Gmail and Google Calendar with read-only OAuth permissions.
+3. Connect Gmail and Google Calendar with read-only OAuth permissions.
+4. Add a read-only WHOOP integration and custom Hermes skill.
 5. Build the food/preferences files and approval-based Sunday recipe scout.
 
 The Lightsail instance and Hermes are running in Mumbai, with subscription OAuth and Discord conversations working. See [deployment notes](docs/deployment-notes.md) for the verified details and the [setup guide](docs/lightsail-setup.md) for rebuilding the runtime.

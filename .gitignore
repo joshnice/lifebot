@@ -5,6 +5,9 @@
 *.pem
 *.key
 credentials.json
+google_client_secret.json
+google_token.json
+client_secret*.json
 secrets/
 .aws/
 

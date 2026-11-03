@@ -6,7 +6,7 @@ Lifebot is a personal assistant built on Nous Research's Hermes Agent and hosted
 
 - Keep Hermes as the upstream runtime. Add project-specific configuration, skills, integrations, and deployment tooling here as needed.
 - Read `README.md` and the relevant files under `docs/` before changing the project.
-- Treat `docs/product-plan.md` as the agreed product direction. Fitness is one Life Bot module; WHOOP is the first real integration.
+- Treat `docs/product-plan.md` as the agreed product direction. Gmail and Google Calendar are the next connections; WHOOP follows as the first custom domain integration. Fitness is one Life Bot module.
 - Gmail and Google Calendar are also early integrations. Start with read-only OAuth scopes. Reading mail must not mark it read or alter labels; calendar reads must not change events or RSVPs.
 - External services are read-only by default. External writes, sends, deletes, edits, and calendar changes require an explicit request for that particular action. A connection is not blanket write permission. Scheduled sends require an explicitly authorized job scope.
 - Internal memory and working files may be maintained autonomously. Adding recipes to the curated recipe collection still requires explicit user approval.

@@ -1,6 +1,6 @@
 # Life Bot product plan
 
-Agreed direction, recorded 2026-10-31. Life Bot is a personal assistant covering daily life. Fitness is its first integration module, within a broader assistant for food, routines, travel, home, and administration.
+Agreed direction, recorded 2026-10-31. Life Bot is a personal assistant covering daily life. Fitness is a planned domain module, within a broader assistant for food, routines, travel, home, and administration. Gmail and Google Calendar are the next connections to complete; WHOOP follows as the first custom domain integration.
 
 ## Foundation
 
@@ -34,13 +34,13 @@ Keep personal memory and domain data outside this source checkout. Git may hold 
 | --- | --- | --- |
 | Foundation | VPS → Hermes → OpenAI OAuth → Discord → conversation with persistent memory | VPS, runtime, OAuth, Discord conversation, and home-channel command working; persistent-memory continuity still needs explicit verification |
 | Operating rules | Read-default/write-on-explicit-request policy and portable memory layout | Requirements recorded; enforcement and memory verification pending |
-| WHOOP | First real integration, through a custom Hermes skill | Planned |
-| Gmail and Google Calendar | Early read-only integrations for inbox awareness and schedule context | Planned alongside the initial integration work; accounts not connected yet |
+| Gmail and Google Calendar | Next connections: read-only inbox awareness and schedule context | Read-only helper and dependencies prepared; Google Cloud client and user OAuth consent pending |
+| WHOOP | First custom domain integration, through a custom Hermes skill | Planned after Google connections |
 | Food | Recipe/preferences files and Sunday recipe scout | Planned, after WHOOP |
 | WhatsApp | Secondary interface for quick mobile interactions | Planned |
 | Broader assistant | Other integrations and proactive routines | Later |
 
-### First real integration: WHOOP
+### First custom domain integration: WHOOP
 
 Create a custom Hermes skill backed by a read-only WHOOP connector. Start with recovery, sleep, strain, workouts, and recent history. Use those inputs for a daily fitness summary and, once explicitly scheduled, a morning brief to the Discord home channel.
 
@@ -54,7 +54,7 @@ Acceptance: the scout explains why each candidate fits, links its source, and id
 
 ### Gmail and Google Calendar
 
-Connect both as early integrations, using Hermes's bundled Google Workspace capability where it meets the permission model. WHOOP remains the first real integration; Gmail and Calendar no longer belong solely to the later backlog.
+Connect both next, using Hermes's bundled Google Workspace capability with its local read-only restriction. WHOOP follows as the first custom domain integration.
 
 Gmail scope: search and read messages, summarize threads, identify follow-ups, and suggest replies in chat. Reading must not mark messages read, archive them, change labels, or create mailbox drafts. Sending, saving drafts, modifying labels, archiving, and deleting require an explicit request for that particular action and an appropriately authorized write path.
 
@@ -76,7 +76,7 @@ Drive, GitHub, travel, home/admin, and possibly finance-related data. Each inher
 
 1. Verify persistent memory across a fresh Discord session with an innocuous fact; do not confuse same-thread history with durable memory.
 2. Implement the permission policy in runtime instructions and integration boundaries, including the recipe exception.
-3. Build the read-only WHOOP connector and custom Hermes skill, then verify an on-demand summary.
-4. Connect Gmail and Google Calendar through read-only OAuth and verify read behavior without mailbox/calendar changes.
+3. Complete Google Cloud client registration and user OAuth consent for Gmail and Google Calendar, then verify read behavior without mailbox/calendar changes.
+4. Build the read-only WHOOP connector and custom Hermes skill, then verify an on-demand summary.
 5. Agree the daily brief contents, schedule, and destination before enabling that specific job.
 6. Build the recipe/preferences foundation before scheduling the Sunday scout.
